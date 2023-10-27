@@ -24,7 +24,13 @@
         localStorage.clear();
         this.$router.push({name:'LoginPage'})
       }
-    }
+    },
+    computed: {
+    isUserLoggedIn() {
+      // Check if the user is logged in (modify this logic based on your authentication system)
+      return localStorage.getItem('user-info') !== null;
+    },
+  }
   };
   </script>
   <style scoped>
