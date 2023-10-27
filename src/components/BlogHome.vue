@@ -2,6 +2,8 @@
   <div>
     <NavBar />
     <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
+    <label for="search">Search:</label>
+    <input type="text" id="search" v-model="searchTerm">
     <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
       need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
     <div v-if="isUserLoggedIn && isFormVisible">
@@ -23,23 +25,36 @@
       </form>
     </div>
     <button v-if="isUserLoggedIn && !isFormVisible" @click="toggleFormVisibility">Write Blog</button>
-    <h2>Recent Blogs</h2>
-    <table class="blog-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Content</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="blog in result" :key="blog.id">
-          <td>{{ blog.title }}</td>
-          <td>{{ truncateText(blog.content, 100) }}</td>
-          <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="searchTerm === ''">
+      <h2>Recent Blogs</h2>
+      <table class="blog-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="blog in result" :key="blog.id">
+            <td>{{ blog.title }}</td>
+            <td>{{ truncateText(blog.content, 100) }}</td>
+            <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else>
+      <table class="blog-table">
+        <tbody>
+          <tr v-for="blog in filteredBlogs" :key="blog.id">
+            <td>{{ blog.title }}</td>
+            <td>{{ truncateText(blog.content, 100) }}</td>
+            <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <script>
@@ -66,7 +81,8 @@ export default {
         category: '',
         content: '',
         tags: ''
-      }
+      },
+      searchTerm: ''
     }
   },
   created() {
@@ -76,6 +92,13 @@ export default {
     isUserLoggedIn() {
       // Check if the user is logged in (modify this logic based on your authentication system)
       return localStorage.getItem('user-info') !== null;
+    },
+    filteredBlogs() {
+      return this.result.filter(blog => {
+        // Check if the blog title or content contains the search term
+        return blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase());
+      });
     }
   },
 
