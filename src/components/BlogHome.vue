@@ -2,8 +2,8 @@
   <div>
     <NavBar />
     <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
-    <label for="search">Search:</label>
-    <input type="text" id="search" v-model="searchTerm">
+    <div><label for="search">Search:</label>
+    <input type="text" id="search" v-model="searchTerm"></div>
     <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
       need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
     <div v-if="isUserLoggedIn && isFormVisible">
@@ -31,14 +31,16 @@
         <thead>
           <tr>
             <th>Title</th>
+            <th>Category</th>
             <th>Content</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="blog in result" :key="blog.id">
-            <td>{{ blog.title }}</td>
-            <td>{{ truncateText(blog.content, 100) }}</td>
+            <td><b>{{ blog.title }}</b></td>
+            <td>{{ blog.category }}</td>
+            <td>{{ truncateText(blog.content, 60) }}</td>
             <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
           </tr>
         </tbody>
@@ -48,8 +50,9 @@
       <table class="blog-table">
         <tbody>
           <tr v-for="blog in filteredBlogs" :key="blog.id">
-            <td>{{ blog.title }}</td>
-            <td>{{ truncateText(blog.content, 100) }}</td>
+            <td><b>{{ blog.title }}</b></td>
+            <td>{{ blog.category }}</td>
+            <td>{{ truncateText(blog.content, 60) }}</td>
             <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
           </tr>
         </tbody>
@@ -97,7 +100,7 @@ export default {
       return this.result.filter(blog => {
         // Check if the blog title or content contains the search term
         return blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase());
+          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase());
       });
     }
   },
@@ -108,6 +111,7 @@ export default {
       axios.get(page)
         .then(
           ({ data }) => {
+            data.sort((a, b) => b.id - a.id);
             console.log(data);
             this.result = data;
           }
@@ -179,7 +183,7 @@ label {
 
 input[type="text"],
 textarea {
-  width: 100%;
+  width: 60%;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;

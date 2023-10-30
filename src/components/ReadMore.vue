@@ -134,3 +134,13 @@ export default {
   }
 };
 </script>
+<style>
+button{
+  background-color: #5a70e7;
+  color: white;
+  padding: 05px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}</style>
