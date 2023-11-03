@@ -3,7 +3,8 @@
     <NavBar />
     <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
     <div><label for="search">Search:</label>
-    <input type="text" id="search" v-model="searchTerm"></div>
+      <input type="text" id="search" v-model="searchTerm">
+    </div>
     <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
       need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
     <div v-if="isUserLoggedIn && isFormVisible">
@@ -22,6 +23,7 @@
         <input type="text" id="tags" v-model="blogForm.tags"><br>
 
         <button type="submit">Submit</button>
+        <button type="button" @click="cancelForm">Cancel</button>
       </form>
     </div>
     <button v-if="isUserLoggedIn && !isFormVisible" @click="toggleFormVisibility">Write Blog</button>
@@ -33,6 +35,7 @@
             <th>Title</th>
             <th>Category</th>
             <th>Content</th>
+            <th> Author </th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -41,6 +44,7 @@
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 60) }}</td>
+            <td>{{ blog.user.name }}</td>
             <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
           </tr>
         </tbody>
@@ -53,6 +57,7 @@
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 60) }}</td>
+            <td>{{ blog.user.name }}</td>
             <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
           </tr>
         </tbody>
@@ -83,9 +88,10 @@ export default {
         title: '',
         category: '',
         content: '',
-        tags: ''
+        tags: '',
+        user_id: ''
       },
-      searchTerm: ''
+      searchTerm: '',
     }
   },
   created() {
@@ -100,19 +106,27 @@ export default {
       return this.result.filter(blog => {
         // Check if the blog title or content contains the search term
         return blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase());
+          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase())||
+          blog.user.name.toLowerCase().includes(this.searchTerm.toLowerCase());
       });
     }
   },
 
   methods: {
+    
+    mounted() {
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      if (user) {
+        this.userId = user.id;
+      }
+    },
     BlogsLoad() {
       var page = "http://127.0.0.1:8000/api/blog";
       axios.get(page)
         .then(
           ({ data }) => {
             data.sort((a, b) => b.id - a.id);
-            console.log(data);
+            // console.log(data);
             this.result = data;
           }
         );
@@ -121,6 +135,7 @@ export default {
       this.isFormVisible = !this.isFormVisible;
     },
     submitBlogForm() {
+      this.blogForm.user_id = this.userId;
       // Send a POST request to create a new blog post
       axios.post('http://127.0.0.1:8000/api/blog', this.blogForm)
         .then(response => {
@@ -139,6 +154,9 @@ export default {
           // Handle errors, show an error message, etc.
           console.error('Error creating blog post:', error);
         });
+    },
+    cancelForm() {
+      this.isFormVisible = false; // Hide the form when cancel button is clicked
     },
     truncateText(text, maxLength) {
       if (text.length > maxLength) {

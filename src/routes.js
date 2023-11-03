@@ -3,6 +3,7 @@ import BlogHome from './components/BlogHome.vue'
 import SignUp from './components/SignUp.vue'
 import LoginPage from './components/LoginPage.vue'
 import ReadMore from './components/ReadMore.vue';
+import YourBlogs from './components/YourBlogs.vue';
 
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
         name: 'ReadMore',
         component: ReadMore,
         path: '/blog/:id',
+    },
+    {
+        name: 'YourBlogs',
+        component: YourBlogs,
+        path: '/yourblogs',
     }
 
 ]

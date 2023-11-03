@@ -8,7 +8,7 @@
         <div class="nav-links">
           <router-link to="/">Home</router-link>
           <router-link to="/">About</router-link>
-          <router-link to="/">Blog</router-link>
+          <router-link to="/yourblogs">your Blogs</router-link>
           <!-- Add more navigation links as needed -->
         </div>
         <div v-if="isUserLoggedIn" class="user-menu">

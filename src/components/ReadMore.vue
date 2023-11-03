@@ -3,7 +3,7 @@
     <NavBar />
     <div v-if="blog.title && !isEditing">
       <h2>{{ blog.title }}</h2>
-      <p>{{ blog.content }}</p>
+      <p class="styled-content">{{ blog.content }}</p>
       <button @click="startEditing">Edit</button>
       <button @click="deleteBlog">Delete</button>
     </div>
@@ -135,12 +135,20 @@ export default {
 };
 </script>
 <style>
-button{
+button {
   background-color: #5a70e7;
   color: white;
-  padding: 05px 50px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-}</style>
+  margin-right: 10px;
+  /* Add margin to the right side of the first button */
+}
+
+.styled-content {
+  font-size: 17px;
+  line-height: 2;
+}
+</style>
