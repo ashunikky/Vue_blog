@@ -2,8 +2,8 @@
   <div>
     <NavBar />
     <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
-    <div><label for="search">Search:</label>
-      <input type="text" id="search" v-model="searchTerm">
+    <div><label for="search"></label>
+      <input type="text" placeholder="Search" id="search" v-model="searchTerm">
     </div>
     <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
       need an account? <router-link to="/sign-up"> Sign Up</router-link></p>

@@ -4,8 +4,12 @@
     <div v-if="blog.title && !isEditing">
       <h2>{{ blog.title }}</h2>
       <p class="styled-content">{{ blog.content }}</p>
-      <button @click="startEditing">Edit</button>
-      <button @click="deleteBlog">Delete</button>
+      <div>
+        <button @click="goBack">Back</button>
+        <button v-if="isUserAuthorised " @click="startEditing">Edit</button>
+        <button v-if="isUserAuthorised " @click="deleteBlog">Delete</button>
+
+      </div>
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -27,6 +31,7 @@
             <textarea v-model="blog.content" class="form-control" placeholder="Content"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" @click="cancelForm">Cancel</button>
         </form>
       </div>
     </div>
@@ -45,6 +50,7 @@ export default {
   data() {
     return {
       isEditing: false,
+      isButtonVisible: false,
       blog: {
         id: '',
         title: '',
@@ -76,6 +82,10 @@ export default {
     },
     startEditing() {
       this.isEditing = true;
+    },
+    goBack() {
+      // Assuming this.blog.id contains the ID of the current blog
+      this.$router.push({ name: 'BlogHome' });
     },
     save() {
       if (this.blog.id == '') {
@@ -114,23 +124,35 @@ export default {
     },
     deleteBlog() {
       const blogId = this.blog.id;
-      axios.delete(`http://127.0.0.1:8000/api/blog/${blogId}`)
-        .then(() => {
-          alert('Deleted successfully');
-          this.$router.push({ name: 'BlogHome' });
-        })
-        .catch(error => {
-          console.error(error);
-          // Handle error
-        });
+      const isConfirmed = window.confirm('Are you sure you want to delete this blog?');
+      if (isConfirmed) {
+        axios.delete(`http://127.0.0.1:8000/api/blog/${blogId}`)
+          .then(() => {
+            alert('Deleted successfully');
+            this.$router.push({ name: 'BlogHome' });
+          })
+          .catch(error => {
+            console.error(error);
+            // Handle error
+          });
+      }
+    },
+    cancelForm() {
+      this.isEditing = false;
     }
   },
   computed: {
     isUserLoggedIn() {
-      // Implement logic to check if the user is logged in
-      return true; // Replace with your actual authentication logic
+      return localStorage.getItem('user-info') !== null;
+    },
+    userId() {
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      return user ? user.id : null;
+    },
+    isUserAuthorised(){
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      return user.id === this.blog.user_id;
     }
-
   }
 };
 </script>

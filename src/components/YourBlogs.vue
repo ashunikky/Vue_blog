@@ -9,16 +9,14 @@
             <th>Title</th>
             <th>Category</th>
             <th>Content</th>
-            <th> Author </th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="blog in result" :key="blog.id">
+          <tr v-for="blog in filteredBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 60) }}</td>
-            <td>{{ blog.user.name }}</td>
+            <td>{{ truncateText(blog.content, 100) }}</td>
             <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
           </tr>
         </tbody>
@@ -26,74 +24,58 @@
     </div>
   </div>
 </template>
+
 <script>
-import NavBar from './NavBar.vue'
-import axios from 'axios'
+import NavBar from './NavBar.vue';
+import axios from 'axios';
 
 export default {
-  name: 'BlogsHome',
+  name: 'YourBlogs',
   components: {
-    NavBar
+    NavBar,
   },
   data() {
     return {
-      isFormVisible: false,
-      result: {},
-      blog: {
-        id: '',
-        category: '',
-        title: '',
-        content: ''
-      },
-      blogForm: {
-        title: '',
-        category: '',
-        content: '',
-        tags: '',
-        user_id: ''
-      },
-      searchTerm: '',
-    }
+      filteredBlogs: [],
+    };
   },
   created() {
     this.BlogsLoad();
   },
-  computed: {
-    isUserLoggedIn() {
-      // Check if the user is logged in (modify this logic based on your authentication system)
-      return localStorage.getItem('user-info') !== null;
-    },
-  },
-
   methods: {
-    
-    mounted() {
-      let user = JSON.parse(localStorage.getItem('user-info'));
-      if (user) {
-        this.userId = user.id;
-      }
-    },
     BlogsLoad() {
-      var page = "http://127.0.0.1:8000/api/blog";
-      axios.get(page)
-        .then(
-          ({ data }) => {
+      let user = localStorage.getItem('user-info');
+      if (!user) {
+        alert('Please login to access this content.');
+        this.$router.push({ name: 'BlogHome' });
+      } else {
+        var page = "http://127.0.0.1:8000/api/blog";
+        axios.get(page)
+          .then(({ data }) => {
             data.sort((a, b) => b.id - a.id);
-            console.log(data);
-            this.result = data;
-          }
-        );
-    },
-    
-    truncateText(text, maxLength) {
-      if (text.length > maxLength) {
-        return text.slice(0, maxLength) + "...";
+            this.filteredBlogs = data.filter(blog => blog.user_id === this.userId);
+          })
+          .catch(error => {
+            console.error("Error loading blogs:", error);
+          });
       }
-      return text;
     },
-  }
-}
+      truncateText(text, maxLength) {
+        if (text.length > maxLength) {
+          return text.slice(0, maxLength) + "...";
+        }
+        return text;
+      },
+    },
+    computed: {
+      userId() {
+        let user = JSON.parse(localStorage.getItem('user-info'));
+        return user ? user.id : null;
+      },
+    },
+  };
 </script>
+
 <style scoped>
 .blog-table {
   width: 100%;
