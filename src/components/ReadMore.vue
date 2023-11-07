@@ -3,39 +3,46 @@
     <NavBar />
     <div v-if="blog.title && !isEditing">
       <h2>{{ blog.title }}</h2>
-      <p class="styled-content">{{ blog.content }}</p>
-      <div>
-        <button @click="goBack">Back</button>
-        <button v-if="isUserAuthorised " @click="startEditing">Edit</button>
-        <button v-if="isUserAuthorised " @click="deleteBlog">Delete</button>
+      <div v-if="blog && blog.user">
+        <p>by {{ blog.user.name }},{{ formatDate(blog.updated_at) }}</p>
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
+        <!-- <p>by {{ blog.user.name }} ,{{ formatDate(blog.updated_at) }}</p> -->
+        <p class="styled-content">{{ blog.content }}</p>
+        <div>
+          <button @click="goBack">Back</button>
+          <button v-if="isUserAuthorised" @click="startEditing">Edit</button>
+          <button v-if="isUserAuthorised" @click="deleteBlog">Delete</button>
 
+        </div>
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
+      <div v-if="isEditing">
+        <div class="container">
+          <h2>Edit Blog</h2>
+          <form @submit.prevent="updateBlog">
+            <div class="form-group">
+              <label>Blog Title</label>
+              <input type="text" v-model="blog.title" class="form-control" placeholder="Blog Title">
+            </div>
+            <div class="form-group">
+              <label>Blog Category</label>
+              <input type="text" v-model="blog.category" class="form-control" placeholder="Blog Category">
+            </div>
+            <div class="form-group">
+              <label>Content</label>
+              <textarea v-model="blog.content" class="form-control" placeholder="Content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" @click="cancelForm">Cancel</button>
+          </form>
+        </div>
       </div>
     </div>
-    <div v-else>
-      <p>Loading...</p>
-    </div>
-    <div v-if="isEditing">
-      <div class="container">
-        <h2>Edit Blog</h2>
-        <form @submit.prevent="updateBlog">
-          <div class="form-group">
-            <label>Blog Title</label>
-            <input type="text" v-model="blog.title" class="form-control" placeholder="Blog Title">
-          </div>
-          <div class="form-group">
-            <label>Blog Category</label>
-            <input type="text" v-model="blog.category" class="form-control" placeholder="Blog Category">
-          </div>
-          <div class="form-group">
-            <label>Content</label>
-            <textarea v-model="blog.content" class="form-control" placeholder="Content"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" @click="cancelForm">Cancel</button>
-        </form>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -80,6 +87,11 @@ export default {
           });
       }
     },
+    formatDate(timestamp) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+      return formattedDate;
+    },
     startEditing() {
       this.isEditing = true;
     },
@@ -114,6 +126,7 @@ export default {
       axios.put(`http://127.0.0.1:8000/api/blog/${blogId}`, this.blog) // Send blog data with the request
         .then(({ data }) => { // Use response data here
           alert("Updated successfully");
+          console.log(data);
           this.blog = data; // Update the blog data with the response data
           this.isEditing = false; // Exit editing mode
         })
@@ -149,7 +162,7 @@ export default {
       let user = JSON.parse(localStorage.getItem('user-info'));
       return user ? user.id : null;
     },
-    isUserAuthorised(){
+    isUserAuthorised() {
       let user = JSON.parse(localStorage.getItem('user-info'));
       return user.id === this.blog.user_id;
     }
@@ -158,7 +171,7 @@ export default {
 </script>
 <style>
 button {
-  background-color: #5a70e7;
+  background-color: #687efa;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -169,8 +182,16 @@ button {
   /* Add margin to the right side of the first button */
 }
 
+button:hover {
+  background-color: #092df7;
+}
+
 .styled-content {
   font-size: 17px;
   line-height: 2;
+}
+
+p {
+  font-size: 12px;
 }
 </style>

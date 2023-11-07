@@ -17,7 +17,9 @@
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 100) }}</td>
-            <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
+            <td><router-link :to="'/blog/' + blog.id">
+                <button>Read More</button>
+              </router-link></td>
           </tr>
         </tbody>
       </table>

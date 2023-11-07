@@ -43,9 +43,11 @@
           <tr v-for="blog in result" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 60) }}</td>
+            <td>{{ truncateText(blog.content, 80) }}</td>
             <td>{{ blog.user.name }}</td>
-            <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
+            <td><router-link :to="'/blog/' + blog.id">
+                <button>Continue Reading...</button>
+              </router-link></td>
           </tr>
         </tbody>
       </table>
@@ -56,9 +58,11 @@
           <tr v-for="blog in filteredBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 60) }}</td>
+            <td>{{ truncateText(blog.content, 80) }}</td>
             <td>{{ blog.user.name }}</td>
-            <td><router-link :to="'/blog/' + blog.id">Read More</router-link></td>
+            <td><router-link :to="'/blog/' + blog.id">
+                <button>Continue Reading...</button>
+              </router-link></td>
           </tr>
         </tbody>
       </table>
@@ -106,20 +110,13 @@ export default {
       return this.result.filter(blog => {
         // Check if the blog title or content contains the search term
         return blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase())||
+          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           blog.user.name.toLowerCase().includes(this.searchTerm.toLowerCase());
       });
     }
   },
 
   methods: {
-    
-    mounted() {
-      let user = JSON.parse(localStorage.getItem('user-info'));
-      if (user) {
-        this.userId = user.id;
-      }
-    },
     BlogsLoad() {
       var page = "http://127.0.0.1:8000/api/blog";
       axios.get(page)
@@ -135,7 +132,10 @@ export default {
       this.isFormVisible = !this.isFormVisible;
     },
     submitBlogForm() {
-      this.blogForm.user_id = this.userId;
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      this.blogForm.user_id = user.id;
+      console.log(this.blogForm);
+      console.log(this.userId);
       // Send a POST request to create a new blog post
       axios.post('http://127.0.0.1:8000/api/blog', this.blogForm)
         .then(response => {
@@ -209,7 +209,7 @@ textarea {
 }
 
 button[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #3e9b41;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -219,6 +219,6 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #048573;
 }
 </style>
