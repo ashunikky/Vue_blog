@@ -82,7 +82,7 @@ export default {
 .user-menu button {
  
   background-color: rgb(252, 252, 252);
-  color: #8f0c0c;;
+  color: #eb3131;;
   border: none;
   padding: 8px 8px;
   cursor: pointer;

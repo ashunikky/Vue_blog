@@ -40,13 +40,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="blog in result" :key="blog.id">
+          <tr v-for="blog in paginatedBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 80) }}</td>
             <td>{{ blog.user.name }}</td>
             <td><router-link :to="'/blog/' + blog.id">
-                <button>Continue Reading...</button>
+                <button>Read More</button>
               </router-link></td>
           </tr>
         </tbody>
@@ -54,19 +54,33 @@
     </div>
     <div v-else>
       <table class="blog-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Content</th>
+            <th> Author </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr v-for="blog in filteredBlogs" :key="blog.id">
+          <tr v-for="blog in paginatedFilteredBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 80) }}</td>
             <td>{{ blog.user.name }}</td>
             <td><router-link :to="'/blog/' + blog.id">
-                <button>Continue Reading...</button>
+                <button>Read More</button>
               </router-link></td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+  <div class="pagination">
+    <button @click="changePage(-1)" :disabled="currentPage === 1">Previous</button>
+    <span>{{ currentPage }}/{{ totalPages }}</span>
+    <button @click="changePage(1)" :disabled="currentPage === totalPages">Next</button>
   </div>
 </template>
 <script>
@@ -81,7 +95,7 @@ export default {
   data() {
     return {
       isFormVisible: false,
-      result: {},
+      result: [],
       blog: {
         id: '',
         category: '',
@@ -96,6 +110,8 @@ export default {
         user_id: ''
       },
       searchTerm: '',
+      currentPage: 1,
+      blogsPerPage: 2,
     }
   },
   created() {
@@ -113,7 +129,20 @@ export default {
           blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           blog.user.name.toLowerCase().includes(this.searchTerm.toLowerCase());
       });
-    }
+    },
+    paginatedBlogs() {
+      const startIndex = (this.currentPage - 1) * this.blogsPerPage;
+      const endIndex = startIndex + this.blogsPerPage;
+      return this.result.slice(startIndex, endIndex);
+    },
+    paginatedFilteredBlogs() {
+      const startIndex = (this.currentPage - 1) * this.blogsPerPage;
+      const endIndex = startIndex + this.blogsPerPage;
+      return this.filteredBlogs.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredBlogs.length / this.blogsPerPage);
+    },
   },
 
   methods: {
@@ -127,6 +156,9 @@ export default {
             this.result = data;
           }
         );
+    },
+    changePage(offset) {
+      this.currentPage += offset;
     },
     toggleFormVisibility() {
       this.isFormVisible = !this.isFormVisible;

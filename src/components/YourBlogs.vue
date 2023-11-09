@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="blog in filteredBlogs" :key="blog.id">
+          <tr v-for="blog in paginatedBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
             <td>{{ truncateText(blog.content, 100) }}</td>
@@ -23,6 +23,11 @@
           </tr>
         </tbody>
       </table>
+      <div class="pagination">
+        <button @click="changePage(-1)" :disabled="currentPage === 1">Previous</button>
+        <span>{{ currentPage }}/{{ totalPages }}</span>
+        <button @click="changePage(1)" :disabled="currentPage === totalPages">Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +44,8 @@ export default {
   data() {
     return {
       filteredBlogs: [],
+      currentPage: 1,
+      blogsPerPage: 1,
     };
   },
   created() {
@@ -68,8 +75,19 @@ export default {
         }
         return text;
       },
+      changePage(offset) {
+      this.currentPage += offset;
+    },
     },
     computed: {
+      paginatedBlogs() {
+      const startIndex = (this.currentPage - 1) * this.blogsPerPage;
+      const endIndex = startIndex + this.blogsPerPage;
+      return this.filteredBlogs.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredBlogs.length / this.blogsPerPage);
+    },
       userId() {
         let user = JSON.parse(localStorage.getItem('user-info'));
         return user ? user.id : null;
