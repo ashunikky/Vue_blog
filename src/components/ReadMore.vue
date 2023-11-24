@@ -1,14 +1,15 @@
 <template>
   <div>
     <NavBar />
-    <div v-if="blog.title && !isEditing">
-      <h2>{{ blog.title }}</h2>
-      <div v-if="blog && blog.user">
-        <p>by {{ blog.user.name }},{{ formatDate(blog.updated_at) }}</p>
-      </div>
-      <div v-else>
-        <p>Loading...</p>
-      </div>
+    <div class="narrow-div">
+      <div v-if="blog.title && !isEditing">
+        <h2>{{ blog.title }}</h2>
+        <div v-if="blog && blog.user">
+          <p>by {{ blog.user.name }},{{ formatDate(blog.updated_at) }}</p>
+        </div>
+        <div v-else>
+          <p>Loading...</p>
+        </div>
         <!-- <p>by {{ blog.user.name }} ,{{ formatDate(blog.updated_at) }}</p> -->
         <p class="styled-content">{{ blog.content }}</p>
         <div>
@@ -43,21 +44,26 @@
         </div>
       </div>
     </div>
+    <blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" />
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 import NavBar from './NavBar.vue';
+import BlogComment from './BlogComment.vue';
 
 export default {
   name: 'ReadMore',
   components: {
-    NavBar
+    NavBar,
+    BlogComment,
   },
   data() {
     return {
       isEditing: false,
       isButtonVisible: false,
+      comments: [],
       blog: {
         id: '',
         title: '',
@@ -68,6 +74,7 @@ export default {
   },
   mounted() {
     this.loadBlog();
+    this.fetchComments();
   },
   methods: {
     loadBlog() {
@@ -152,7 +159,17 @@ export default {
     },
     cancelForm() {
       this.isEditing = false;
-    }
+    },
+    async fetchComments() {
+      try {
+        const blogId = this.$route.params.id;
+        const response = await axios.get(`http://127.0.0.1:8000/api/blog/${blogId}/comments`);
+        this.comments = response.data;
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    },
   },
   computed: {
     isUserLoggedIn() {
@@ -181,7 +198,7 @@ button {
   margin-right: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
-  margin-left:10px;
+  margin-left: 10px;
   /* Add margin to the right side of the first button */
 }
 
@@ -196,5 +213,16 @@ button:hover {
 
 p {
   font-size: 12px;
+}
+
+.narrow-div {
+  width: 80%;
+  /* Adjust the percentage to your desired width */
+  margin: 0 auto;
+  /* Center the div horizontally (optional) */
+  border: 1px solid #ccc;
+  /* Optional border for visualization */
+  padding: 10px;
+  /* Optional padding for content inside the div */
 }
 </style>

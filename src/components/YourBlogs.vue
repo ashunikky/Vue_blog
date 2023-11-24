@@ -45,7 +45,7 @@ export default {
     return {
       filteredBlogs: [],
       currentPage: 1,
-      blogsPerPage: 1,
+      blogsPerPage: 5,
     };
   },
   created() {

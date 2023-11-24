@@ -1,80 +1,94 @@
 <template>
   <div>
     <NavBar />
-    <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
-    <div><label for="search"></label>
-      <input type="text" placeholder="Search" id="search" v-model="searchTerm">
-    </div>
-    <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
-      need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
-    <div v-if="isUserLoggedIn && isFormVisible">
-      <h2>Write a Blog</h2>
-      <form @submit.prevent="submitBlogForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" v-model="blogForm.title" required><br>
+    <div class="narrow-div">
+      <!-- <h1>Hello, Welcome to ABC Blog</h1> -->
+      <div><label for="search"></label>
+        <input type="text" placeholder="Search" id="search" v-model="searchTerm">
+      </div>
+      <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
+        need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
+      <div v-if="isUserLoggedIn && isFormVisible">
+        <h2>Write a Blog</h2>
+        <form @submit.prevent="submitBlogForm">
+          <label for="title">Title:</label>
+          <input type="text" id="title" v-model="blogForm.title" required><br>
 
-        <label for="category">Category:</label>
-        <input type="text" id="category" v-model="blogForm.category" required><br>
+          <label for="category">Category:</label>
+          <select id="category" v-model="blogForm.category" required>
+            <option value="Technology">Technology</option>
+            <option value="Science">Science</option>
+            <option value="Travel">Travel</option>
+            <option value="Food">Food</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Health">Health</option>
+            <option value="Sports">Sports</option>
+            <option value="Other">Other</option>
+            <!-- Add more options as needed -->
+          </select>
 
-        <label for="content">Content:</label>
-        <textarea id="content" v-model="blogForm.content" required></textarea><br>
 
-        <label for="tags">Tags:</label>
-        <input type="text" id="tags" v-model="blogForm.tags"><br>
+          <label for="content">Content:</label>
+          <textarea id="content" v-model="blogForm.content" required></textarea><br>
 
-        <button type="submit">Submit</button>
-        <button type="button" @click="cancelForm">Cancel</button>
-      </form>
-    </div>
-    <button v-if="isUserLoggedIn && !isFormVisible" @click="toggleFormVisibility">Write Blog</button>
-    <div v-if="searchTerm === ''">
-      <h2>Recent Blogs</h2>
-      <table class="blog-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Content</th>
-            <th> Author </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="blog in paginatedBlogs" :key="blog.id">
-            <td><b>{{ blog.title }}</b></td>
-            <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 80) }}</td>
-            <td>{{ blog.user.name }}</td>
-            <td><router-link :to="'/blog/' + blog.id">
-                <button>Read More</button>
-              </router-link></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div v-else>
-      <table class="blog-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Content</th>
-            <th> Author </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="blog in paginatedFilteredBlogs" :key="blog.id">
-            <td><b>{{ blog.title }}</b></td>
-            <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 80) }}</td>
-            <td>{{ blog.user.name }}</td>
-            <td><router-link :to="'/blog/' + blog.id">
-                <button>Read More</button>
-              </router-link></td>
-          </tr>
-        </tbody>
-      </table>
+          <label for="tags">Tags:</label>
+          <input type="text" id="tags" v-model="blogForm.tags"><br>
+
+          <button type="submit">Submit</button>
+          <button type="button" @click="cancelForm">Cancel</button>
+        </form>
+      </div>
+      <button v-if="isUserLoggedIn && !isFormVisible" @click="toggleFormVisibility">Write Blog</button>
+      <div v-if="searchTerm === ''">
+        <h2>Recent Blogs</h2>
+        <table class="blog-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Content</th>
+              <th> Author </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="blog in paginatedBlogs" :key="blog.id">
+              <td><b>{{ blog.title }}</b></td>
+              <td>{{ blog.category }}</td>
+              <td>{{ truncateText(blog.content, 80) }}</td>
+              <td>{{ blog.user.name }}</td>
+              <td><router-link :to="'/blog/' + blog.id">
+                  <button>Read More</button>
+                </router-link></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-else>
+        <table class="blog-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Content</th>
+              <th> Author </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="blog in paginatedFilteredBlogs" :key="blog.id">
+              <td><b>{{ blog.title }}</b></td>
+              <td>{{ blog.category }}</td>
+              <td>{{ truncateText(blog.content, 80) }}</td>
+              <td>{{ blog.user.name }}</td>
+              <td><router-link :to="'/blog/' + blog.id">
+                  <button>Read More</button>
+                </router-link></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="pagination">
@@ -111,7 +125,7 @@ export default {
       },
       searchTerm: '',
       currentPage: 1,
-      blogsPerPage: 2,
+      blogsPerPage: 5,
     }
   },
   created() {
@@ -125,11 +139,18 @@ export default {
     filteredBlogs() {
       return this.result.filter(blog => {
         // Check if the blog title or content contains the search term
-        return blog.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          blog.content.toLowerCase().includes(this.searchTerm.toLowerCase()) || blog.tags.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          blog.user.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+        const searchTermLowerCase = this.searchTerm.toLowerCase();
+        const titleIncludesTerm = blog.title.toLowerCase().includes(searchTermLowerCase);
+        const contentIncludesTerm = blog.content.toLowerCase().includes(searchTermLowerCase);
+
+        // Check if blog.tags and blog.user are defined before accessing their properties
+        const tagsIncludesTerm = blog.tags && blog.tags.toLowerCase().includes(searchTermLowerCase);
+        const userNameIncludesTerm = blog.user && blog.user.name.toLowerCase().includes(searchTermLowerCase);
+
+        return titleIncludesTerm || contentIncludesTerm || tagsIncludesTerm || userNameIncludesTerm;
       });
     },
+
     paginatedBlogs() {
       const startIndex = (this.currentPage - 1) * this.blogsPerPage;
       const endIndex = startIndex + this.blogsPerPage;
@@ -236,8 +257,9 @@ textarea {
   width: 60%;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
+  height: 30px;
 }
 
 button[type="submit"] {
