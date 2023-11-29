@@ -5,7 +5,7 @@
       <div v-if="blog.title && !isEditing">
         <h2>{{ blog.title }}</h2>
         <div v-if="blog && blog.user">
-          <p>by {{ blog.user.name }},{{ formatDate(blog.updated_at) }}</p>
+          <p>by {{ blog.user.name }}, {{ formatDate(blog.updated_at) }}</p>
         </div>
         <div v-else>
           <p>Loading...</p>
@@ -43,8 +43,9 @@
           </form>
         </div>
       </div>
-    </div>
-    <blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" />
+      <h3>Comments ({{ totalComments }})</h3>
+      <div class="comment-div"><blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" /></div>
+    </div> 
   </div>
 </template>
 
@@ -170,6 +171,17 @@ export default {
         console.error('Error fetching comments:', error);
       }
     },
+    getRecursiveCommentsCount(comments) {
+      let count = comments.length;
+
+      for (const comment of comments) {
+        if (comment.children_recursive && comment.children_recursive.length > 0) {
+          count += this.getRecursiveCommentsCount(comment.children_recursive);
+        }
+      }
+
+      return count;
+    }
   },
   computed: {
     isUserLoggedIn() {
@@ -182,6 +194,9 @@ export default {
     isUserAuthorised() {
       let user = JSON.parse(localStorage.getItem('user-info'));
       return user.id === this.blog.user_id;
+    },
+    totalComments() {
+      return this.getRecursiveCommentsCount(this.comments);
     }
   }
 };
@@ -212,7 +227,8 @@ button:hover {
 }
 
 p {
-  font-size: 12px;
+  font-size: 15px;
+  line-height: 2;
 }
 
 .narrow-div {
@@ -224,5 +240,10 @@ p {
   /* Optional border for visualization */
   padding: 10px;
   /* Optional padding for content inside the div */
+}
+.comment-div {
+  text-align: left;
+  margin-left: 20px;
+ 
 }
 </style>
