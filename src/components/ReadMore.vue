@@ -218,7 +218,8 @@ button {
 }
 
 button:hover {
-  background-color: #092df7;
+  background-color: #660569;
+  color: white;
 }
 
 .styled-content {
