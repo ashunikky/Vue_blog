@@ -31,11 +31,11 @@ export default {
       });
 
       console.warn(result);
-      if (result.status == 201) {
+      if (result.status == 200) {
 
         alert("sign-up done");
-        localStorage.setItem("user-info", JSON.stringify(result.data))
-        this.$router.push({ name: 'BlogHome' })
+        // localStorage.setItem("user-info", JSON.stringify(result.data))
+        this.$router.push({ name: 'LoginPage' })
       }
     }
   },
