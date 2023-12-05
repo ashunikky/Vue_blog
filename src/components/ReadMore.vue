@@ -44,8 +44,13 @@
         </div>
       </div>
       <h3>Comments ({{ totalComments }})</h3>
-      <div class="comment-div"><blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" /></div>
-    </div> 
+      <div>
+        <label for="comment"></label>
+        <input type="text" placeholder="Post Comment" id="comment" v-model="comment.content">
+        <button type="submit" class="btn btn-primary" @click="postComment">Post</button>
+      </div>
+      <div class="comment-scroll"><blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" /></div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +70,11 @@ export default {
       isEditing: false,
       isButtonVisible: false,
       comments: [],
+      comment: {
+        content: '',
+        parent_id: '',
+        user_id: '',
+      },
       blog: {
         id: '',
         title: '',
@@ -181,7 +191,31 @@ export default {
       }
 
       return count;
+    },
+    async postComment() {
+      try {
+        let user = JSON.parse(localStorage.getItem('user-info'));
+        this.comment.user_id = user.id;
+        this.comment.parent_id = null; // Set parent_id to null
+
+        const blogId = this.$route.params.id;
+        const response = await axios.post(`http://127.0.0.1:8000/api/blog/${blogId}/comments`, this.comment);
+
+        // Assuming your API returns the posted comment in the response
+        const postedComment = response.data;
+
+        console.log('Comment Posted:', postedComment);
+        alert("Comment Posted");
+        window.location.reload();
+
+        // You may want to reset the comment input after posting
+        this.comment = '';
+      } catch (error) {
+        // Handle errors, show an error message, etc.
+        console.error('Error creating blog post:', error);
+      }
     }
+
   },
   computed: {
     isUserLoggedIn() {
@@ -202,25 +236,25 @@ export default {
 };
 </script>
 <style>
+/* Enhanced button styles */
 button {
   background-color: #687efa;
   color: white;
-  padding: 12px 20px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-  /* Add margin to the right side of the first button */
+  margin: 5px 10px; /* Shorthand for margin values */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background-color: #660569;
+  background-color: #4d63c1;
+  transform: scale(1.05); /* Scale up on hover for a subtle effect */
   color: white;
 }
+
 
 .styled-content {
   font-size: 17px;
@@ -232,19 +266,22 @@ p {
   line-height: 2;
 }
 
+/* Improved styles for a narrow div */
 .narrow-div {
   width: 80%;
-  /* Adjust the percentage to your desired width */
   margin: 0 auto;
-  /* Center the div horizontally (optional) */
-  border: 1px solid #ccc;
-  /* Optional border for visualization */
-  padding: 10px;
-  /* Optional padding for content inside the div */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+  border: 1px solid #ccc; /* Border color adjusted for better contrast */
+  border-radius: 2px; /* Rounded corners for a softer look */
+  background-color: #f7f4f4; /* Light background color for better readability */
+  padding: 20px; /* Increased padding for better spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
 }
-.comment-div {
-  text-align: left;
-  margin-left: 20px;
- 
+
+
+.comment-scroll {
+  max-height: 400px;
+  /* Adjust the height as needed */
+  overflow-y: auto;
 }
 </style>

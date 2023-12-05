@@ -2,9 +2,9 @@
   <div class="comment-div">
     <p><b>{{ comment.user_name }}</b> : {{ comment.content }}</p>
     <div>
-      <button class="replybuttons" @click="showReplyForm">Reply{{ comment.id }}</button>
+      <button class="replybuttons" @click="showReplyForm">Reply</button>
       <ReplyForm v-if="isReplyFormVisible" @submit-reply="handleReplySubmission" @cancel-reply="cancelReplyForm"
-        :user_id="comment.user_id" :parent_id="comment.id" />
+         :parent_id="comment.id" />
     </div>
     <div v-if="comment.children_recursive.length > 0" class="reply-div">
       <blog-comment v-for="childComment in comment.children_recursive" :key="childComment.id" :comment="childComment" />
@@ -41,14 +41,12 @@ export default {
         const response = await axios.post(`http://127.0.0.1:8000/api/blog/${blogId}/comments`, replyData);
 
         console.log('Server response:', response.data);
-        alert("Reply posted");
+        alert("Reply Posted");
         window.location.reload();
       } catch (error) {
         console.error('Error submitting reply:', error);
         // Handle error logic if necessary
       }
-
-
       // Close the reply form after submission
       this.isReplyFormVisible = false;
     },
@@ -61,9 +59,14 @@ export default {
 </script>
 <style>
 .comment-div {
-
+  text-align: left;
+  margin-left: 30px;
   border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
+}
+.reply-div {
+  border-bottom: 1px solid rgb(10, 10, 10);
+  /* border-top: 1px solid #ccc; */
 }
 
 button.replybuttons {

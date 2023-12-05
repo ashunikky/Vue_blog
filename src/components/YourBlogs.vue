@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <div>
+    <div class="narrow-div">
       <h2>Your Blogs</h2>
       <table class="blog-table">
         <thead>
@@ -22,6 +22,9 @@
               </router-link></td>
           </tr>
         </tbody>
+        <div v-if="showNoBlogsMessage">
+          <p class="warning-text">You haven't written any blogs yet.</p>
+        </div>
       </table>
       <div class="pagination">
         <button @click="changePage(-1)" :disabled="currentPage === 1">Previous</button>
@@ -63,37 +66,54 @@ export default {
           .then(({ data }) => {
             data.sort((a, b) => b.id - a.id);
             this.filteredBlogs = data.filter(blog => blog.user_id === this.userId);
+            if (this.filteredBlogs.length === 0) {
+              this.showNoBlogsMessage = true; // Add a property to your data to control the message display
+            } else {
+              this.showNoBlogsMessage = false;
+            }
           })
           .catch(error => {
             console.error("Error loading blogs:", error);
           });
       }
     },
-      truncateText(text, maxLength) {
-        if (text.length > maxLength) {
-          return text.slice(0, maxLength) + "...";
-        }
-        return text;
-      },
-      changePage(offset) {
+    truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.slice(0, maxLength) + "...";
+      }
+      return text;
+    },
+    changePage(offset) {
       this.currentPage += offset;
     },
-    },
-    computed: {
-      paginatedBlogs() {
+  },
+  computed: {
+    paginatedBlogs() {
       const startIndex = (this.currentPage - 1) * this.blogsPerPage;
       const endIndex = startIndex + this.blogsPerPage;
       return this.filteredBlogs.slice(startIndex, endIndex);
     },
     totalPages() {
-      return Math.ceil(this.filteredBlogs.length / this.blogsPerPage);
+      const numberOfBlogs = this.filteredBlogs.length;
+      const blogsPerPage = this.blogsPerPage;
+
+      // Ensure at least 1 page if there are no blogs
+      if (numberOfBlogs === 0) {
+        return 1;
+      }
+
+      // Calculate total pages
+      const totalPages = Math.ceil(numberOfBlogs / blogsPerPage);
+
+      // Ensure at least 1 page if there are up to 5 blogs
+      return Math.min(totalPages, 1);
     },
-      userId() {
-        let user = JSON.parse(localStorage.getItem('user-info'));
-        return user ? user.id : null;
-      },
+    userId() {
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      return user ? user.id : null;
     },
-  };
+  },
+};
 </script>
 
 <style scoped>

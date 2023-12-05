@@ -9,7 +9,7 @@
       <p v-if="!isUserLoggedIn">to write blogs <router-link to="/login"> Login</router-link>,
         need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
       <div v-if="isUserLoggedIn && isFormVisible">
-        <h2>Write a Blog</h2>
+        <h3>Write a Blog</h3>
         <form @submit.prevent="submitBlogForm">
           <label for="title">Title:</label>
           <input type="text" id="title" v-model="blogForm.title" required><br>
@@ -41,7 +41,7 @@
       </div>
       <button v-if="isUserLoggedIn && !isFormVisible" @click="toggleFormVisibility">Write Blog</button>
       <div v-if="searchTerm === ''">
-        <h2>Recent Blogs</h2>
+        <h3>Recent Blogs</h3>
         <table class="blog-table">
           <thead>
             <tr>
@@ -87,6 +87,9 @@
                 </router-link></td>
             </tr>
           </tbody>
+          <div v-if="showNoBlogsMessage">
+            <p class=" warning-text">did not find any match, please refine your search !!</p>
+          </div>
         </table>
       </div>
     </div>
@@ -144,10 +147,10 @@ export default {
         const contentIncludesTerm = blog.content.toLowerCase().includes(searchTermLowerCase);
 
         // Check if blog.tags and blog.user are defined before accessing their properties
-        const tagsIncludesTerm = blog.tags && blog.tags.toLowerCase().includes(searchTermLowerCase);
+        const categoryIncludesTerm = blog.category && blog.category.toLowerCase().includes(searchTermLowerCase);
         const userNameIncludesTerm = blog.user && blog.user.name.toLowerCase().includes(searchTermLowerCase);
 
-        return titleIncludesTerm || contentIncludesTerm || tagsIncludesTerm || userNameIncludesTerm;
+        return titleIncludesTerm || contentIncludesTerm || categoryIncludesTerm || userNameIncludesTerm;
       });
     },
 
@@ -159,11 +162,15 @@ export default {
     paginatedFilteredBlogs() {
       const startIndex = (this.currentPage - 1) * this.blogsPerPage;
       const endIndex = startIndex + this.blogsPerPage;
-      return this.filteredBlogs.slice(startIndex, endIndex);
+      const paginatedBlogs = this.filteredBlogs.slice(startIndex, endIndex);
+      this.updateNoBlogsMessage(paginatedBlogs);
+      return paginatedBlogs;
     },
     totalPages() {
-      return Math.ceil(this.filteredBlogs.length / this.blogsPerPage);
+      const totalBlogs = this.filteredBlogs.length;
+      return totalBlogs > 0 ? Math.ceil(totalBlogs / this.blogsPerPage) : 1;
     },
+
   },
 
   methods: {
@@ -217,10 +224,13 @@ export default {
       }
       return text;
     },
+    updateNoBlogsMessage(paginatedBlogs) {
+      this.showNoBlogsMessage = paginatedBlogs.length === 0;
+    },
   }
 }
 </script>
-<style scoped>
+<style >
 .blog-table {
   width: 100%;
   border-collapse: collapse;
@@ -254,18 +264,18 @@ label {
 
 input[type="text"],
 textarea {
-  width: 60%;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  width: 50%;
+  margin-bottom: 10px;
+  border: 1px solid rgb(15, 15, 15);
+  border-radius: 5px;
   font-size: 16px;
-  height: 30px;
+  height: 20px;
 }
 
 button[type="submit"] {
   background-color: #3e9b41;
   color: white;
-  padding: 12px 20px;
+  padding: 3px 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -275,4 +285,12 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #048573;
 }
+
+.warning-text {
+  color: rgb(167, 0, 0);
+  font-size: 20px;
+  text-align: center;
+ 
+}
+
 </style>

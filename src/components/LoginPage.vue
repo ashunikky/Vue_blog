@@ -2,7 +2,7 @@
   <img class="logo" src="../assets/blog.png">
   <h3>Login</h3>
   <div class="register">
-    <input type="text" v-model="email" placeholder="Enter Email" />
+    <input type="email" v-model="email" placeholder="Enter Email" />
     <input type="password" v-model="password" placeholder="Enter Password" />
     <button v-on:click="login">Login</button>
     <p>need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
