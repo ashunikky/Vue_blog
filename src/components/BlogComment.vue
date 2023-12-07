@@ -64,10 +64,10 @@ export default {
   border-top: 1px solid #ccc;
   /* border-bottom: 1px solid #ccc; */
 }
-.reply-div {
+/* .reply-div {
   border-bottom: 1px solid rgb(10, 10, 10);
-  /* border-top: 1px solid #ccc; */
-}
+  border-top: 1px solid #ccc;
+} */
 
 button.replybuttons {
   background-color: #042e3be3;
@@ -78,4 +78,5 @@ button.replybuttons {
   cursor: pointer;
   font-size: 15px;
 }
+
 </style>

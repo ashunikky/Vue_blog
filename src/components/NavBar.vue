@@ -7,7 +7,7 @@
       </div>
       <div class="nav-links">
         <router-link to="/">Home</router-link>
-        <router-link to="/">About</router-link>
+        <router-link to="/about-page">About</router-link>
         <router-link to="/yourblogs">Your Blogs</router-link>
         <!-- Add more navigation links as needed -->
       </div>
@@ -45,10 +45,10 @@ export default {
 <style>
 /* Navbar styles */
 .navbar {
-  background-color: #2a3b4e; /* Darker shade for a more modern look */
+  background-color: #2a3b4e;
   color: #fff;
-  padding: 15px 0; /* Increased padding for better spacing */
-  box-shadow: 0 2px 4px rgba(96, 192, 139, 0.1); /* Subtle shadow for depth */
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(96, 192, 139, 0.1);
 }
 
 .container {
@@ -57,7 +57,7 @@ export default {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 55px;
+  padding: 0 20px; /* Adjusted padding for smaller screens */
 }
 
 .logo img {
@@ -68,26 +68,30 @@ export default {
 
 .nav-links {
   display: flex;
-  gap: 20px; /* Reduced gap for a more compact look */
+  flex-direction: row; /* Stack links vertically on smaller screens */
+  gap: 10px; /* Reduced gap for a more compact look */
+  text-align: center; /* Center align links on smaller screens */
 }
+
 .nav-links a {
-  color: #92a4f5; /* Change to a more vibrant color */
+  color: #92a4f5;
   text-decoration: none;
   transition: color 0.3s ease;
-  font-weight: bold; /* Add bold font-weight for better visibility */
+  font-weight: bold;
 }
 
 .nav-links a:hover {
-  color: #fff; /* Brighter color on hover */
+  color: #fff;
 }
+
 /* Updated styles for the user menu */
 .user-menu {
   background-color: #fff;
-  color: #333;
+  color: rgb(133, 128, 128);
   border-radius: 8px;
   box-shadow: 0 4px 8px #ccc;
-  /* padding: 15px; */
   text-align: center;
+  
 }
 
 .user-menu p {
@@ -97,11 +101,10 @@ export default {
 }
 
 .user-menu button {
-  background-color: #ccc;
-  color: #d81e1e;
+  background-color: rgba(10, 10, 10, 0.438);
+  color: #ffffff;
   border: none;
   border-radius: 5px;
-  padding: 10px 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -110,4 +113,14 @@ export default {
   background-color: #d81e1e;
 }
 
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 10px; /* Adjusted padding for even smaller screens */
+  }
+
+  .nav-links {
+    flex-direction: column; /* Align links horizontally on smaller screens */
+  }
+}
 </style>

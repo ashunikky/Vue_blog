@@ -10,12 +10,12 @@
         need an account? <router-link to="/sign-up"> Sign Up</router-link></p>
       <div v-if="isUserLoggedIn && isFormVisible">
         <h3>Write a Blog</h3>
-        <form @submit.prevent="submitBlogForm">
+        <form class="submitBlogForm" @submit.prevent="submitBlogForm">
           <label for="title">Title:</label>
           <input type="text" id="title" v-model="blogForm.title" required><br>
 
           <label for="category">Category:</label>
-          <select id="category" v-model="blogForm.category" required>
+          <select id="category" v-model="blogForm.category" required class="custom-select">
             <option value="Technology">Technology</option>
             <option value="Science">Science</option>
             <option value="Travel">Travel</option>
@@ -32,7 +32,7 @@
           <label for="content">Content:</label>
           <textarea id="content" v-model="blogForm.content" required></textarea><br>
 
-          <label for="tags">Tags:</label>
+          <label for="tags">Tags(optional):</label>
           <input type="text" id="tags" v-model="blogForm.tags"><br>
 
           <button type="submit">Submit</button>
@@ -56,7 +56,7 @@
             <tr v-for="blog in paginatedBlogs" :key="blog.id">
               <td><b>{{ blog.title }}</b></td>
               <td>{{ blog.category }}</td>
-              <td>{{ truncateText(blog.content, 80) }}</td>
+              <td>{{ truncateText(blog.content, 150) }}</td>
               <td>{{ blog.user.name }}</td>
               <td><router-link :to="'/blog/' + blog.id">
                   <button>Read More</button>
@@ -231,25 +231,68 @@ export default {
 }
 </script>
 <style >
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  /* Remove default body margin */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #2a3b4e;
+  color: #fff;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(96, 192, 139, 0.1);
+}
+
+/* Blog table styles */
+/* Add this to your existing styles or create a new style block */
+
 .blog-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  box-shadow: 0 0 5px rgba(26, 27, 27, 0.5);
 }
 
 .blog-table th,
 .blog-table td {
-  padding: 10px;
+  padding: 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
 }
 
 .blog-table th {
   background-color: #f2f2f2;
+  font-weight: bold; /* Make the header text bold */
+}
+/* Style the "Read More" button */
+.blog-table button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-form {
-  max-width: 400px;
+.blog-table button:hover {
+  background-color: #0f5c8f;
+}
+
+/* Responsive styling for small screens */
+@media screen and (max-width: 768px) {
+  .blog-table th,
+  .blog-table td {
+    padding: 10px;
+  }
+}
+
+/* Form styles */
+.submitBlogForm {
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -262,20 +305,44 @@ label {
   margin-bottom: 10px;
 }
 
+/* Common styles for input and textarea */
 input[type="text"],
 textarea {
-  width: 50%;
-  margin-bottom: 10px;
-  border: 1px solid rgb(15, 15, 15);
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  height: 20px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+/* Focus styles for better user feedback */
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #5b9bd5; /* Adjust the color to match your design */
+  box-shadow: 0 0 5px rgba(91, 155, 213, 0.5); /* Add a subtle box shadow on focus */
+}
+
+/* Placeholder text color */
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #999; /* Adjust the color to match your design */
+}
+
+/* Specific styles for textarea */
+textarea {
+  height: 120px; /* Set a specific height for textarea */
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+
+/* Button styles */
 button[type="submit"] {
   background-color: #3e9b41;
   color: white;
-  padding: 3px 5px;
+  padding: 10px 25px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -286,11 +353,39 @@ button[type="submit"]:hover {
   background-color: #048573;
 }
 
+/* Warning text styles */
 .warning-text {
   color: rgb(167, 0, 0);
   font-size: 20px;
   text-align: center;
- 
 }
 
+/* Add this to your existing styles or create a new style block */
+
+/* Custom select styles */
+.custom-select {
+  width: 50%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  border: 1px solid rgb(190, 153, 97);
+  border-radius: 5px;
+  font-size: 16px;
+}
+/* Style the options */
+.custom-select option {
+  padding: 10px;
+}
+
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    height: 20px;
+  }
+
+
+}
 </style>

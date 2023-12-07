@@ -1,10 +1,10 @@
 <!-- ReplyForm.vue -->
 <template>
-    <div class="reply-form">
-        <textarea v-model="replyText" placeholder="Type your reply..."></textarea>
+    <form class="reply-form">
+        <textarea v-model="replyText" placeholder="Type your reply..." required></textarea>
         <button class="replybuttons" @click="submitReply">Submit</button>
         <button class="replybuttons" @click="cancelReply">Cancel</button>
-    </div>
+    </form>
 </template>
   
 <script>
@@ -46,7 +46,4 @@ export default {
 };
 </script>
   
-<style scoped>
-/* Add your styling here */
-</style>
   

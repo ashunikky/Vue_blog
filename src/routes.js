@@ -4,7 +4,7 @@ import SignUp from './components/SignUp.vue'
 import LoginPage from './components/LoginPage.vue'
 import ReadMore from './components/ReadMore.vue';
 import YourBlogs from './components/YourBlogs.vue';
-
+import AboutPage from './components/AboutPage.vue';
 
 const routes = [
     {
@@ -31,6 +31,11 @@ const routes = [
         name: 'YourBlogs',
         component: YourBlogs,
         path: '/yourblogs',
+    },
+    {
+        name: 'AboutPage',
+        component: AboutPage,
+        path: '/about-page'
     }
 
 ]

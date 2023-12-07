@@ -16,7 +16,7 @@
           <tr v-for="blog in paginatedBlogs" :key="blog.id">
             <td><b>{{ blog.title }}</b></td>
             <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 100) }}</td>
+            <td>{{ truncateText(blog.content, 150) }}</td>
             <td><router-link :to="'/blog/' + blog.id">
                 <button>Read More</button>
               </router-link></td>
@@ -116,7 +116,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .blog-table {
   width: 100%;
   border-collapse: collapse;
@@ -134,30 +134,30 @@ export default {
   background-color: #f2f2f2;
 }
 
-form {
+/* form {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+} */
 
 label {
   display: block;
   margin-bottom: 10px;
 }
 
-input[type="text"],
+/* input[type="text"],
 textarea {
   width: 60%;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-}
+} */
 
-button[type="submit"] {
+/* button[type="submit"] {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -169,5 +169,5 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #45a049;
-}
+} */
 </style>
