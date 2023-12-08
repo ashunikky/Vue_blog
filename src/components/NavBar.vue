@@ -2,13 +2,13 @@
   <nav class="navbar">
     <div class="container">
       <div class="logo">
-        <img src="../assets/blog.png" alt="Blog Logo" />
-        <p>ABC Blog</p>
+        <img src="../assets/ABC.svg" alt="Blog Logo" />
+        <p class="logo-text">Blog</p>
       </div>
       <div class="nav-links">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about-page">About</router-link>
-        <router-link to="/yourblogs">Your Blogs</router-link>
+        <router-link to="/">HOME</router-link>
+        <router-link to="/about-page">ABOUT</router-link>
+        <router-link to="/yourblogs">YOUR-BLOGS</router-link>
         <!-- Add more navigation links as needed -->
       </div>
       <div v-if="isUserLoggedIn" class="user-menu">
@@ -47,25 +47,34 @@ export default {
 .navbar {
   background-color: #2a3b4e;
   color: #fff;
-  padding: 15px 0;
-  box-shadow: 0 2px 4px rgba(96, 192, 139, 0.1);
+  padding: 1px 20px;
+  box-shadow: 10px 2px 4px rgba(2, 37, 18, 0.1);
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px; /* Adjusted padding for smaller screens */
 }
-
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .logo img {
   width: 40px;
   height: 40px;
   margin-right: 10px;
 }
-
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(255, 255, 255); /* Set your desired text color */
+  margin: 0;
+}
 .nav-links {
   display: flex;
   flex-direction: row; /* Stack links vertically on smaller screens */
@@ -110,7 +119,7 @@ export default {
 }
 
 .user-menu button:hover {
-  background-color: #d81e1e;
+  background-color: #db5959;
 }
 
 /* Media query for smaller screens */

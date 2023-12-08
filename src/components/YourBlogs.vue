@@ -3,29 +3,26 @@
     <NavBar />
     <div class="narrow-div">
       <h2>Your Blogs</h2>
-      <table class="blog-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Content</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="blog in paginatedBlogs" :key="blog.id">
-            <td><b>{{ blog.title }}</b></td>
-            <td>{{ blog.category }}</td>
-            <td>{{ truncateText(blog.content, 150) }}</td>
-            <td><router-link :to="'/blog/' + blog.id">
-                <button>Read More</button>
-              </router-link></td>
-          </tr>
-        </tbody>
+      <div class="blog-card-container">
+        <div class="blog-card" v-for="blog in paginatedBlogs" :key="blog.id">
+          <div class="blog-card-header">
+            <h3><b>{{ blog.title }}</b></h3>
+            <p>{{ blog.category }}</p>
+          </div>
+          <div class="blog-card-content">
+            <p>{{ truncateText(blog.content, 100) }}</p>
+          </div>
+          <div class="blog-card-footer">
+            <p>Author: {{ blog.user.name }}</p>
+            <router-link :to="'/blog/' + blog.id">
+              <button>Read More</button>
+            </router-link>
+          </div>
+        </div>
         <div v-if="showNoBlogsMessage">
           <p class="warning-text">You haven't written any blogs yet.</p>
         </div>
-      </table>
+      </div>
       <div class="pagination">
         <button @click="changePage(-1)" :disabled="currentPage === 1">Previous</button>
         <span>{{ currentPage }}/{{ totalPages }}</span>

@@ -271,7 +271,7 @@ p {
 /* Improved styles for a narrow div */
 .narrow-div {
   width: 80%;
-  margin: 0 auto;
+  margin: 10px auto;
   box-sizing: border-box;
   /* Include padding and border in the element's total width */
   border: 1px solid #ccc;

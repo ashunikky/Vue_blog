@@ -36,7 +36,7 @@ In the vast landscape of the internet, where information flows abundantly, findi
 
 <p>In conclusion, ABC Blog isn't just a blog – it's an immersive experience that invites you to explore, learn, and connect. Join us on this journey of discovery and let ABC Blog be your trusted companion in the digital realm. Happy reading!.</p>
 
-        <p>Thank you for visiting ABC Blog!</p>
+        <p><b>Thank you for visiting ABC Blog!</b></p>
     </div>
 </template>
 <script>
