@@ -228,6 +228,175 @@ export default {
 }
 </script>
 <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  /* Remove default body margin */
+}
+
+
+
+/* Blog table styles */
+/* Add this to your existing styles or create a new style block */
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 0 5px rgba(26, 27, 27, 0.5);
+}
+
+.blog-table th,
+.blog-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+.blog-table th {
+  background-color: #f2f2f2;
+  font-weight: bold; /* Make the header text bold */
+}
+/* Style the "Read More" button */
+.blog-table button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.blog-table button:hover {
+  background-color: #0f5c8f;
+}
+
+/* Responsive styling for small screens */
+@media screen and (max-width: 768px) {
+  .blog-table th,
+  .blog-table td {
+    padding: 10px;
+  }
+}
+
+/* Form styles */
+.submitBlogForm {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Common styles for input and textarea */
+input[type="text"],
+textarea {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Focus styles for better user feedback */
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #5b9bd5; /* Adjust the color to match your design */
+  box-shadow: 0 0 5px rgba(91, 155, 213, 0.5); /* Add a subtle box shadow on focus */
+}
+
+/* Placeholder text color */
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #999; /* Adjust the color to match your design */
+}
+
+/* Specific styles for textarea */
+textarea {
+  height: 120px; /* Set a specific height for textarea */
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+
+/* Button styles */
+button[type="submit"] {
+  background-color: #3e9b41;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #048573;
+}
+
+/* Warning text styles */
+.warning-text {
+  color: rgb(167, 0, 0);
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Add this to your existing styles or create a new style block */
+
+/* Custom select styles */
+.custom-select {
+  width: 50%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  border: 1px solid rgb(190, 153, 97);
+  border-radius: 5px;
+  font-size: 16px;
+}
+/* Style the options */
+.custom-select option {
+  padding: 10px;
+}
+.blog-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.blog-heading h3 {
+  color: #333; /* Set your desired text color */
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 2px solid #2a3b4e; /* Set your desired border color */
+}
+
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    height: 20px;
+  }
+  .blog-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+}
 .blog-card-container {
     display: flex;
     /* flex-wrap: wrap; */
