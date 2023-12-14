@@ -2,7 +2,9 @@
   <div>
     <NavBar />
     <div class="narrow-div">
-      <h2>Your Blogs</h2>
+      <div class="blog-heading">
+                    <h3>Your Blogs</h3>
+                </div>
       <div class="blog-card-container">
         <div class="blog-card" v-for="blog in paginatedBlogs" :key="blog.id">
           <div class="blog-card-header">
@@ -23,11 +25,11 @@
           <p class="warning-text">You haven't written any blogs yet.</p>
         </div>
       </div>
-      <div class="pagination">
-        <button @click="changePage(-1)" :disabled="currentPage === 1">Previous</button>
+    </div>
+    <div class="pagination">
+        <button @click="changePage(-1)" :disabled="currentPage === 1"><font-awesome-icon icon="angle-left" /></button>
         <span>{{ currentPage }}/{{ totalPages }}</span>
-        <button @click="changePage(1)" :disabled="currentPage === totalPages">Next</button>
-      </div>
+        <button @click="changePage(1)" :disabled="currentPage === totalPages"><font-awesome-icon icon="angle-right" /></button>
     </div>
   </div>
 </template>
@@ -131,40 +133,10 @@ export default {
   background-color: #f2f2f2;
 }
 
-/* form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
-
 label {
   display: block;
   margin-bottom: 10px;
 }
 
-/* input[type="text"],
-textarea {
-  width: 60%;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-} */
 
-/* button[type="submit"] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button[type="submit"]:hover {
-  background-color: #45a049;
-} */
 </style>

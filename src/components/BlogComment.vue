@@ -2,7 +2,7 @@
   <div class="comment-div">
     <p><b>{{ comment.user_name }}</b> : {{ comment.content }}</p>
     <div>
-      <button class="replybuttons" @click="showReplyForm">Reply</button>
+      <button class="replybuttons" @click="showReplyForm"><font-awesome-icon icon="reply" /> Reply</button>
       <ReplyForm v-if="isReplyFormVisible" @submit-reply="handleReplySubmission" @cancel-reply="cancelReplyForm"
          :parent_id="comment.id" />
     </div>
@@ -53,14 +53,24 @@ export default {
     cancelReplyForm() {
       // Handle cancel logic here
       this.isReplyFormVisible = false;
-    }
+    },
+    updateComment() {
+      this.isEditing = true;
+    },
+  },
+  computed:{
+    commentUserAuthorised() {
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      return user.id === this.comment.user_id;
+
   }
-};
+}
+}
 </script>
 <style>
 .comment-div {
   text-align: left;
-  margin-left: 30px;
+  margin-left: 50px;
   border-top: 1px solid #ccc;
   /* border-bottom: 1px solid #ccc; */
 }
@@ -70,13 +80,13 @@ export default {
 } */
 
 button.replybuttons {
-  background-color: #042e3be3;
+  background-color: #5b7faf;
   color: white;
   padding: 5px 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 </style>

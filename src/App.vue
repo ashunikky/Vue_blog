@@ -4,6 +4,9 @@
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+library.add(faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass);
 export default {
   name: 'App',
   
@@ -36,7 +39,7 @@ export default {
 }
 
 .register button {
-  width: 320px;
+  width: 40%;
   height: 40px;
   border: 1px solid skyblue;
   color: #fff;

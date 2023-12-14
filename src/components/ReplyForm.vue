@@ -2,8 +2,8 @@
 <template>
     <form class="reply-form">
         <textarea v-model="replyText" placeholder="Type your reply..." required></textarea>
-        <button class="replybuttons" @click="submitReply">Submit</button>
-        <button class="replybuttons" @click="cancelReply">Cancel</button>
+        <button class="replybuttons" @click="submitReply"><font-awesome-icon icon="paper-plane" /> Post</button>
+        <button class="replybuttons" @click="cancelReply"><font-awesome-icon icon="xmark" /> Cancel</button>
     </form>
 </template>
   

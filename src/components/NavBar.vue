@@ -6,19 +6,20 @@
         <p class="logo-text">Blog</p>
       </div>
       <div class="nav-links">
-        <router-link to="/">HOME</router-link>
-        <router-link to="/about-page">ABOUT</router-link>
-        <router-link to="/yourblogs">YOUR-BLOGS</router-link>
+        <router-link to="/"><font-awesome-icon icon="house" /> <br>Home</router-link>
+        <router-link to="/about-page"><font-awesome-icon icon="circle-info" /><br>About</router-link>
+        <router-link to="/yourblogs"><font-awesome-icon icon="book" /><br>Your Blogs</router-link>
         <!-- Add more navigation links as needed -->
       </div>
       <div v-if="isUserLoggedIn" class="user-menu">
-        <p>{{userName }}</p>
-        <button v-on:click="logout">Logout</button>
+        <p><font-awesome-icon icon="user-tie" /> {{userName }}</p>
+        <button v-on:click="logout"><font-awesome-icon icon="power-off" /> </button>
       </div>
     </div>
   </nav>
 </template>
 <script>
+
 export default {
   methods: {
     logout() {
@@ -48,14 +49,14 @@ export default {
   background-color: #2a3b4e;
   color: #fff;
   padding: 1px 20px;
-  box-shadow: 10px 2px 4px rgba(2, 37, 18, 0.1);
+  box-shadow: 0px 2px 6px rgb(69, 100, 83);
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
+  margin: 5px auto;
   padding: 0 20px; /* Adjusted padding for smaller screens */
 }
 .logo {
@@ -78,19 +79,19 @@ export default {
 .nav-links {
   display: flex;
   flex-direction: row; /* Stack links vertically on smaller screens */
-  gap: 10px; /* Reduced gap for a more compact look */
+  gap: 25px; /* Reduced gap for a more compact look */
   text-align: center; /* Center align links on smaller screens */
 }
 
 .nav-links a {
-  color: #92a4f5;
+  color: #d4daf5;
   text-decoration: none;
   transition: color 0.3s ease;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .nav-links a:hover {
-  color: #fff;
+  color: rgb(8, 222, 250);
 }
 
 /* Updated styles for the user menu */
@@ -105,7 +106,7 @@ export default {
 
 .user-menu p {
   font-size: 18px;
-  margin-bottom: 10px;
+  margin: 5px;
   color: #333;
 }
 

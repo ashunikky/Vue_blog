@@ -3,19 +3,21 @@
     <NavBar />
     <div class="narrow-div">
       <div v-if="blog.title && !isEditing">
+        <div class="blog-heading">
+          <h3>{{ blog.title }}</h3>
+          <div v-if="blog && blog.user">
+            <p>by {{ blog.user.name }}, {{ formatDate(blog.updated_at) }}</p>
+          </div>
+        </div>
         <div class="blog-image">
           <img src="../assets/sample_blog.jpg" alt="Blog cover" />
         </div>
-        <h2>{{ blog.title }}</h2>
-        <div v-if="blog && blog.user">
-          <p>by {{ blog.user.name }}, {{ formatDate(blog.updated_at) }}</p>
-        </div>
-        <!-- <p>by {{ blog.user.name }} ,{{ formatDate(blog.updated_at) }}</p> -->
         <p class="styled-content">{{ blog.content }}</p>
         <div>
-          <button @click="goBack">Back</button>
-          <button v-if="isUserAuthorised" @click="startEditing">Edit</button>
-          <button v-if="isUserAuthorised" @click="deleteBlog">Delete</button>
+          <button @click="goBack"><font-awesome-icon icon="angle-left" /> Back</button>
+          
+          <button v-if="isUserAuthorised" @click="startEditing"><font-awesome-icon icon="pen-to-square" /> Edit</button>
+          <button v-if="isUserAuthorised" @click="deleteBlog"><font-awesome-icon icon="trash" /> Delete</button>
 
         </div>
       </div>
@@ -24,27 +26,40 @@
         <div>
           <form class="submitBlogForm" @submit.prevent="updateBlog">
             <div class="form-group">
-              <label>Blog Title</label>
+              
               <input type="text" v-model="blog.title" class="form-control" placeholder="Blog Title">
             </div>
             <div class="form-group">
-              <label>Blog Category</label>
-              <input type="text" v-model="blog.category" class="form-control" placeholder="Blog Category">
+              
+              <!-- <input type="text" v-model="blog.category" class="form-control" placeholder="Blog Category"> -->
+              <select v-model="blog.category" required class="custom-select">
+                        <option value="" disabled selected hidden>Category</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Science">Science</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Food">Food</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Health">Health</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Other">Other</option>
+                        <!-- Add more options as needed -->
+                    </select>
             </div>
             <div class="form-group">
-              <label>Content</label>
+              
               <textarea v-model="blog.content" class="form-control" placeholder="Content"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" @click="cancelForm">Cancel</button>
+            <button type="submit" class="btn btn-primary"><font-awesome-icon icon="floppy-disk" /> Save</button>
+            <button type="button" @click="cancelForm"><font-awesome-icon icon="xmark" /> Cancel</button>
           </form>
         </div>
       </div>
-      <h3>Comments ({{ totalComments }})</h3>
+      <h3><font-awesome-icon icon="comments" /> Comments ({{ totalComments }})</h3>
       <form @submit.prevent="postComment">
         <label for="comment"></label>
         <input type="text" placeholder="Post Comment" id="comment" v-model="comment.content" required>
-        <button type="submit" class="btn btn-primary">Post</button>
+        <button type="submit" ><font-awesome-icon icon="paper-plane" /> Post</button>
       </form>
 
       <div class="comment-scroll"><blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" /></div>
@@ -56,7 +71,9 @@
 import axios from 'axios';
 import NavBar from './NavBar.vue';
 import BlogComment from './BlogComment.vue';
-
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+library.add(faAngleLeft);
 export default {
   name: 'ReadMore',
   components: {
@@ -113,7 +130,7 @@ export default {
     },
     goBack() {
       // Assuming this.blog.id contains the ID of the current blog
-      this.$router.push({ name: 'BlogHome' });
+      this.$router.go(-1);
     },
     save() {
       if (this.blog.id == '') {
@@ -230,18 +247,18 @@ export default {
     },
     totalComments() {
       return this.getRecursiveCommentsCount(this.comments);
-    }
+    },
   }
 };
 </script>
 <style>
 /* Enhanced button styles */
 button {
-  background-color: #687efa;
+  background-color: #042e3be3;
   color: white;
   padding: 10px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: pointer;
   font-size: 16px;
   margin: 5px 10px;
@@ -251,7 +268,7 @@ button {
 }
 
 button:hover {
-  background-color: #4d63c1;
+  background-color: #0b6ff1;
   transform: scale(1.05);
   /* Scale up on hover for a subtle effect */
   color: white;
@@ -282,7 +299,7 @@ p {
   /* Light background color for better readability */
   padding: 20px;
   /* Increased padding for better spacing */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   /* Subtle box shadow for depth */
 }
 
