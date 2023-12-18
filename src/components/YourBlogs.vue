@@ -15,7 +15,7 @@
             <p>{{ truncateText(blog.content, 100) }}</p>
           </div>
           <div class="blog-card-footer">
-            <p>Author: {{ blog.user.name }}</p>
+            <p><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p>
             <router-link :to="'/blog/' + blog.id">
               <button>Read More</button>
             </router-link>
