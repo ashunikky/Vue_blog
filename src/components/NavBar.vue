@@ -46,10 +46,11 @@ export default {
 <style>
 /* Navbar styles */
 .navbar {
-  background-color: #2a3b4e;
+  /* background-color: #2a3b4e; */
   color: #fff;
   padding: 1px 20px;
   box-shadow: 0px 2px 6px rgb(69, 100, 83);
+  background: linear-gradient(171deg, #4982ad, #151616);
 }
 
 .container {
@@ -96,31 +97,34 @@ export default {
 
 /* Updated styles for the user menu */
 .user-menu {
+  display: flex;
   background-color: #fff;
   color: rgb(133, 128, 128);
-  border-radius: 8px;
+  border-radius: 15px;
   box-shadow: 0 4px 8px #ccc;
   text-align: center;
   
 }
 
 .user-menu p {
-  font-size: 18px;
-  margin: 5px;
+  font-size: 15px;
+  margin: 10px;
   color: #333;
 }
 
 .user-menu button {
-  background-color: rgba(10, 10, 10, 0.438);
+  /* background-color: rgba(10, 10, 10, 0.438); */
   color: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background: linear-gradient(90deg, #9cc596, #17571fe3);
 }
 
 .user-menu button:hover {
-  background-color: #db5959;
+  /* background-color: #db5959; */
+  background: linear-gradient(90deg, #c5b296, #c54206e3);
 }
 
 /* Media query for smaller screens */
@@ -131,6 +135,12 @@ export default {
 
   .nav-links {
     flex-direction: column; /* Align links horizontally on smaller screens */
+  }
+  .user-menu {
+    display: inline;
+  }
+  .user-menu button {
+    background: linear-gradient(90deg, #c5b296, #c54206e3);
   }
 }
 </style>

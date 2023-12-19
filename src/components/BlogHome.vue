@@ -20,7 +20,7 @@
                     <h3>Write a Blog</h3>
                 </div>
                 <form class="submitBlogForm" @submit.prevent="submitBlogForm">
-                    <input type="text" id="title" placeholder="Title" v-model="blogForm.title" required><br>
+                    <input type="text" style="width:90%" id="title" placeholder="Title" v-model="blogForm.title" required><br>
                     <select id="category" v-model="blogForm.category" required class="custom-select">
                         <option value="" disabled selected hidden>Category</option>
                         <option value="Technology">Technology</option>
@@ -35,11 +35,11 @@
                         <!-- Add more options as needed -->
                     </select>
 
-                    <textarea id="content" placeholder="Content" v-model="blogForm.content" required></textarea><br>
+                    <textarea style="width:90%" id="content" placeholder="Content" v-model="blogForm.content" required></textarea><br>
 
-                    <input type="text" id="tags" placeholder="Tags(optional)" v-model="blogForm.tags"><br>
+                    <input type="text" style="width:90%" id="tags" placeholder="Tags(optional)" v-model="blogForm.tags"><br>
 
-                    <button type="submit"><font-awesome-icon icon="bullhorn" /> Post</button>
+                    <button type="submit"><font-awesome-icon icon="bullhorn" /> Publish </button>
                     <button type="button" @click="cancelForm"><font-awesome-icon icon="xmark" /> Cancel</button>
                 </form>
             </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="blog-card-container">
                     <div class="blog-card" v-for="blog in paginatedFilteredBlogs" :key="blog.id">
-                        <div class="blog-card-header">
+                        <div class="blog-card-header" style="background: linear-gradient(90deg, #64d798fc, #434b21);">
                             <h3><b>{{ blog.title }}</b></h3>
                             <p>{{ blog.category }}</p>
                         </div>
@@ -295,8 +295,8 @@ body {
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 }
 
 label {
@@ -353,17 +353,11 @@ textarea {
 
 /* Button styles */
 button[type="submit"] {
-    background-color: #048573;
-    color: white;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 16px;
+    background: linear-gradient(171deg, #b6d1bc, #085a1de3);
 }
 
 button[type="submit"]:hover {
-    background-color: #0ac2a9bb;
+    background: linear-gradient(171deg, #a396c5, #7041c5e3);
 }
 
 /* Warning text styles */
@@ -377,12 +371,12 @@ button[type="submit"]:hover {
 
 /* Custom select styles */
 .custom-select {
-    width: 50%;
+    width: 90%;
     /* Adjust the width as needed */
     padding: 10px;
     margin: 15px;
     border: 1px solid rgb(190, 153, 97);
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 16px;
 }
 
@@ -434,7 +428,7 @@ button[type="submit"]:hover {
 
 .blog-card {
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 15px;
     overflow: hidden;
     width: 100%;
     max-width: 400px;
@@ -443,9 +437,9 @@ button[type="submit"]:hover {
 }
 
 .blog-card-header {
-    background-color: #427670;
     color: #fff;
     padding: 15px;
+    background: linear-gradient(90deg, #74c4ba, #083737);
 }
 
 .blog-card-content {
@@ -457,7 +451,7 @@ button[type="submit"]:hover {
 }
 
 .blog-card-footer button {
-    background-color: #65686c;
+    background-color: #2f4664;
     color: #fff;
     padding: 8px 16px;
     border: none;
@@ -472,4 +466,18 @@ button[type="submit"]:hover {
 .link-button {
     color: white;
 }
+.write {
+  background-color: #228cf0; /* Set your desired background color */
+  color: #fff; /* Set your desired text color */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.write:hover {
+  background-color: #0ab0f1; /* Set your desired background color on hover */
+}
+
 </style>

@@ -7,7 +7,7 @@
                 </div>
       <div class="blog-card-container">
         <div class="blog-card" v-for="blog in paginatedBlogs" :key="blog.id">
-          <div class="blog-card-header">
+          <div class="blog-card-header" style="background: linear-gradient(90deg, #968ad8fc, #21224b);">
             <h3><b>{{ blog.title }}</b></h3>
             <p>{{ blog.category }}</p>
           </div>

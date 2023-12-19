@@ -5,8 +5,9 @@
 
 <script>
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-library.add(faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass);
+import { faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass,faClock } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faAngleLeft,faAngleRight,faHouse,faBook,faCircleInfo,faPenNib,faPenToSquare,faTrash,faPaperPlane,faXmark,faReply,faFloppyDisk,faComments,faPowerOff,faBookOpen,faUserTie,faFeather,faUserCheck,faArrowRightToBracket,faUserPlus,faArrowUpFromBracket,faBullhorn,faMagnifyingGlass,faClock);
 export default {
   name: 'App',
   

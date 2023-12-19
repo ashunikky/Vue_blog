@@ -3,19 +3,19 @@
     <NavBar />
     <div class="narrow-div">
       <div v-if="blog.title && !isEditing">
-        <div class="blog-heading">
+        <div class="blog-title">
+          <p class="author-name"><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p>
           <h3>{{ blog.title }}</h3>
-          <div v-if="blog && blog.user">
-            <p>by {{ blog.user.name }}, {{ formatDate(blog.updated_at) }}</p>
-          </div>
+          <p class="updated-at"><font-awesome-icon icon="clock" /> {{ formatDate(blog.updated_at) }}</p>
         </div>
+
         <div class="blog-image">
           <img src="../assets/sample_blog.jpg" alt="Blog cover" />
         </div>
         <p class="styled-content">{{ blog.content }}</p>
         <div>
           <button @click="goBack"><font-awesome-icon icon="angle-left" /> Back</button>
-          
+
           <button v-if="isUserAuthorised" @click="startEditing"><font-awesome-icon icon="pen-to-square" /> Edit</button>
           <button v-if="isUserAuthorised" @click="deleteBlog"><font-awesome-icon icon="trash" /> Delete</button>
 
@@ -26,28 +26,28 @@
         <div>
           <form class="submitBlogForm" @submit.prevent="updateBlog">
             <div class="form-group">
-              
+
               <input type="text" v-model="blog.title" class="form-control" placeholder="Blog Title">
             </div>
             <div class="form-group">
-              
+
               <!-- <input type="text" v-model="blog.category" class="form-control" placeholder="Blog Category"> -->
               <select v-model="blog.category" required class="custom-select">
-                        <option value="" disabled selected hidden>Category</option>
-                        <option value="Technology">Technology</option>
-                        <option value="Science">Science</option>
-                        <option value="Travel">Travel</option>
-                        <option value="Food">Food</option>
-                        <option value="Lifestyle">Lifestyle</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Health">Health</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Other">Other</option>
-                        <!-- Add more options as needed -->
-                    </select>
+                <option value="" disabled selected hidden>Category</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Travel">Travel</option>
+                <option value="Food">Food</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Health">Health</option>
+                <option value="Sports">Sports</option>
+                <option value="Other">Other</option>
+                <!-- Add more options as needed -->
+              </select>
             </div>
             <div class="form-group">
-              
+
               <textarea v-model="blog.content" class="form-control" placeholder="Content"></textarea>
             </div>
             <button type="submit" class="btn btn-primary"><font-awesome-icon icon="floppy-disk" /> Save</button>
@@ -59,7 +59,7 @@
       <form @submit.prevent="postComment">
         <label for="comment"></label>
         <input type="text" placeholder="Post Comment" id="comment" v-model="comment.content" required>
-        <button type="submit" ><font-awesome-icon icon="paper-plane" /> Post</button>
+        <button type="submit"><font-awesome-icon icon="paper-plane" /> Post</button>
       </form>
 
       <div class="comment-scroll"><blog-comment v-for="comment in comments" :key="comment.id" :comment="comment" /></div>
@@ -254,9 +254,9 @@ export default {
 <style>
 /* Enhanced button styles */
 button {
-  background-color: #042e3be3;
+  /* background-color: #06546be3; */
   color: white;
-  padding: 10px 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 15px;
   cursor: pointer;
@@ -265,13 +265,15 @@ button {
   /* Shorthand for margin values */
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #96b1c5, #06546be3);
 }
 
 button:hover {
-  background-color: #0b6ff1;
+  /* background-color: #0b6ff1; */
   transform: scale(1.05);
   /* Scale up on hover for a subtle effect */
   color: white;
+  background: linear-gradient(180deg, #99ccf3, #0b6ff1);
 }
 
 
@@ -299,7 +301,7 @@ p {
   /* Light background color for better readability */
   padding: 20px;
   /* Increased padding for better spacing */
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.2);
   /* Subtle box shadow for depth */
 }
 
@@ -320,6 +322,7 @@ p {
   width: 60%;
   height: auto;
   align-items: center;
+  border-radius: 50px;
 }
 
 .blog-image::before {
@@ -328,8 +331,39 @@ p {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 40%;
   /* Adjusted to cover the bottom 50% */
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #f7f4f4);
+}
+
+.blog-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding: 0px 10px;
+  border-bottom: 1px solid #a4a7ac;
+}
+
+.author-name,
+.updated-at {
+  margin: 0;
+  /* Remove default margin for <p> elements */
+  font-weight: lighter;
+}
+
+@media screen and (max-width: 768px) {
+  .blog-title {
+    display: inline;
+  }
+  .blog-image img {
+  width: 80%;
+  border-radius: 30px;
+}
 }
 </style>
