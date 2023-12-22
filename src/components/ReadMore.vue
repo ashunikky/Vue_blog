@@ -14,6 +14,7 @@
         </div>
         <p class="styled-content">{{ blog.content }}</p>
         <div>
+          <div style="margin-bottom: 10px;"><font-awesome-icon icon="heart" class="heart-icon" /> 2 <b>Likes</b></div>
           <button @click="goBack"><font-awesome-icon icon="angle-left" /> Back</button>
 
           <button v-if="isUserAuthorised" @click="startEditing"><font-awesome-icon icon="pen-to-square" /> Edit</button>
@@ -55,6 +56,7 @@
           </form>
         </div>
       </div>
+      
       <h3><font-awesome-icon icon="comments" /> Comments ({{ totalComments }})</h3>
       <form @submit.prevent="postComment">
         <label for="comment"></label>
@@ -265,7 +267,7 @@ button {
   /* Shorthand for margin values */
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(180deg, #96b1c5, #06546be3);
+  background: linear-gradient(180deg, #83c8eb, #0d0e0d);
 }
 
 button:hover {
@@ -273,7 +275,7 @@ button:hover {
   transform: scale(1.05);
   /* Scale up on hover for a subtle effect */
   color: white;
-  background: linear-gradient(180deg, #99ccf3, #0b6ff1);
+  background: linear-gradient(180deg, #6bd2f1, #063777);
 }
 
 
@@ -289,7 +291,7 @@ p {
 
 /* Improved styles for a narrow div */
 .narrow-div {
-  width: 80%;
+  width: 75%;
   margin: 10px auto;
   box-sizing: border-box;
   /* Include padding and border in the element's total width */
@@ -297,7 +299,6 @@ p {
   /* Border color adjusted for better contrast */
   border-radius: 2px;
   /* Rounded corners for a softer look */
-  background-color: #f7f4f4;
   /* Light background color for better readability */
   padding: 20px;
   /* Increased padding for better spacing */
@@ -331,7 +332,7 @@ p {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 30%;
   /* Adjusted to cover the bottom 50% */
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #f7f4f4);
 }
@@ -361,9 +362,18 @@ p {
   .blog-title {
     display: inline;
   }
+
   .blog-image img {
-  width: 80%;
-  border-radius: 30px;
+    width: 80%;
+    border-radius: 30px;
+  }
 }
+
+.heart-icon {
+  color: #a4a7ac;
+  font-size: 35px;
 }
-</style>
+
+.heart-icon:hover {
+  color: rgb(230, 21, 21);
+}</style>

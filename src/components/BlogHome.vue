@@ -20,7 +20,8 @@
                     <h3>Write a Blog</h3>
                 </div>
                 <form class="submitBlogForm" @submit.prevent="submitBlogForm">
-                    <input type="text" style="width:90%" id="title" placeholder="Title" v-model="blogForm.title" required><br>
+                    <input type="text" style="width:90%" id="title" placeholder="Title" v-model="blogForm.title"
+                        required><br>
                     <select id="category" v-model="blogForm.category" required class="custom-select">
                         <option value="" disabled selected hidden>Category</option>
                         <option value="Technology">Technology</option>
@@ -35,7 +36,8 @@
                         <!-- Add more options as needed -->
                     </select>
 
-                    <textarea style="width:90%" id="content" placeholder="Content" v-model="blogForm.content" required></textarea><br>
+                    <textarea style="width:90%" id="content" placeholder="Content" v-model="blogForm.content"
+                        required></textarea><br>
 
                     <input type="text" style="width:90%" id="tags" placeholder="Tags(optional)" v-model="blogForm.tags"><br>
 
@@ -54,6 +56,7 @@
                         <div class="blog-card-header">
                             <h3><b>{{ blog.title }}</b></h3>
                             <p>{{ blog.category }}</p>
+                            <p class="updated-at"><font-awesome-icon icon="clock" /> {{ formatDate(blog.updated_at) }}</p>
                         </div>
                         <div class="blog-card-content">
                             <p>{{ truncateText(blog.content, 100) }}</p>
@@ -77,6 +80,7 @@
                         <div class="blog-card-header" style="background: linear-gradient(90deg, #64d798fc, #434b21);">
                             <h3><b>{{ blog.title }}</b></h3>
                             <p>{{ blog.category }}</p>
+                            <p class="updated-at"><font-awesome-icon icon="clock" /> {{ formatDate(blog.updated_at) }}</p>
                         </div>
                         <div class="blog-card-content">
                             <p>{{ truncateText(blog.content, 100) }}</p>
@@ -230,6 +234,11 @@ export default {
         updateNoBlogsMessage(paginatedBlogs) {
             this.showNoBlogsMessage = paginatedBlogs.length === 0;
         },
+        formatDate(timestamp) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+            return formattedDate;
+        },
     }
 }
 </script>
@@ -357,7 +366,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(171deg, #a396c5, #7041c5e3);
+    background: linear-gradient(90deg, #96c5a8, #41c553e3);
 }
 
 /* Warning text styles */
@@ -466,18 +475,20 @@ button[type="submit"]:hover {
 .link-button {
     color: white;
 }
+
 .write {
-  background-color: #228cf0; /* Set your desired background color */
-  color: #fff; /* Set your desired text color */
-  padding: 10px 15px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 16px;
+    background-color: #228cf0;
+    /* Set your desired background color */
+    color: #fff;
+    /* Set your desired text color */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .write:hover {
-  background-color: #0ab0f1; /* Set your desired background color on hover */
-}
-
-</style>
+    background-color: #0ab0f1;
+    /* Set your desired background color on hover */
+}</style>

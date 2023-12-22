@@ -50,7 +50,7 @@ export default {
   color: #fff;
   padding: 1px 20px;
   box-shadow: 0px 2px 6px rgb(69, 100, 83);
-  background: linear-gradient(171deg, #4982ad, #151616);
+  background: linear-gradient(171deg, #4995ad, #a29ed3);
 }
 
 .container {
@@ -85,14 +85,14 @@ export default {
 }
 
 .nav-links a {
-  color: #d4daf5;
+  color: white;
   text-decoration: none;
   transition: color 0.3s ease;
   /* font-weight: bold; */
 }
 
 .nav-links a:hover {
-  color: rgb(8, 222, 250);
+  color: rgb(134, 235, 248);
 }
 
 /* Updated styles for the user menu */

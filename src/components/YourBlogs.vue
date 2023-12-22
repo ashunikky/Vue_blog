@@ -10,12 +10,13 @@
           <div class="blog-card-header" style="background: linear-gradient(90deg, #968ad8fc, #21224b);">
             <h3><b>{{ blog.title }}</b></h3>
             <p>{{ blog.category }}</p>
+            <p class="updated-at"><font-awesome-icon icon="clock" /> {{ formatDate(blog.updated_at) }}</p>
           </div>
           <div class="blog-card-content">
             <p>{{ truncateText(blog.content, 100) }}</p>
           </div>
           <div class="blog-card-footer">
-            <p><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p>
+            <!-- <p><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p> -->
             <router-link :to="'/blog/' + blog.id">
               <button>Read More</button>
             </router-link>
@@ -84,6 +85,11 @@ export default {
     },
     changePage(offset) {
       this.currentPage += offset;
+    },
+    formatDate(timestamp) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+      return formattedDate;
     },
   },
   computed: {
