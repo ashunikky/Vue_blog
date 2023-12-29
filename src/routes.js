@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage.vue'
 import ReadMore from './components/ReadMore.vue';
 import YourBlogs from './components/YourBlogs.vue';
 import AboutPage from './components/AboutPage.vue';
+import UserDetail from './components/UserDetail.vue';
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         name: 'AboutPage',
         component: AboutPage,
         path: '/about-page'
+    },
+    {
+        name: 'UserDetail',
+        component: UserDetail,
+        path: '/user/:userid'
     }
 
 ]

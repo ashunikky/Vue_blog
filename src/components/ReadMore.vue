@@ -267,7 +267,7 @@ button {
   /* Shorthand for margin values */
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(180deg, #83c8eb, #0d0e0d);
+  background: linear-gradient(90deg,#a09c6c, #22200b);
 }
 
 button:hover {
@@ -275,7 +275,7 @@ button:hover {
   transform: scale(1.05);
   /* Scale up on hover for a subtle effect */
   color: white;
-  background: linear-gradient(180deg, #6bd2f1, #063777);
+  background: linear-gradient(90deg, #058856, #022f44);
 }
 
 
