@@ -4,7 +4,10 @@
     <div class="narrow-div">
       <div v-if="blog.title && !isEditing">
         <div class="blog-title">
-          <p class="author-name"><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p>
+          <router-link :to="'/user/' + blog.user.id" @click="showUserDetail(blog.user.id)">
+            <p class="author-name"><font-awesome-icon icon="pen-nib" /> {{ blog.user.name }}</p>
+          </router-link>
+
           <h3>{{ blog.title }}</h3>
           <p class="updated-at"><font-awesome-icon icon="clock" /> {{ formatDate(blog.updated_at) }}</p>
         </div>
@@ -56,7 +59,7 @@
           </form>
         </div>
       </div>
-      
+
       <h3><font-awesome-icon icon="comments" /> Comments ({{ totalComments }})</h3>
       <form @submit.prevent="postComment">
         <label for="comment"></label>
@@ -121,6 +124,13 @@ export default {
             // Handle error
           });
       }
+    },
+    showUserDetail(userdetailId) {
+      // Save the user ID to localStorage
+      localStorage.setItem('userdetailId', userdetailId);
+
+      // Navigate to the user detail page (optional)
+      this.$router.push(`/user/${userdetailId}`);
     },
     formatDate(timestamp) {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -267,7 +277,7 @@ button {
   /* Shorthand for margin values */
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(90deg,#a09c6c, #22200b);
+  background: linear-gradient(90deg, #6c7ea0, #001013);
 }
 
 button:hover {
@@ -275,7 +285,7 @@ button:hover {
   transform: scale(1.05);
   /* Scale up on hover for a subtle effect */
   color: white;
-  background: linear-gradient(90deg, #058856, #022f44);
+  background: linear-gradient(90deg, #5fada9, #0f92b9);
 }
 
 
@@ -376,4 +386,5 @@ p {
 
 .heart-icon:hover {
   color: rgb(230, 21, 21);
-}</style>
+}
+</style>
